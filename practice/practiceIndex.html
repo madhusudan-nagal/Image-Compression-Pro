@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>image Compressor Practice</title>
+    <link rel="stylesheet" href="./src/output.css" />
+    <script src="practiceApp.js">  </script>
+</head>
+
+<body class="flex h-full flex-col justify-center items-center bg-black p-6">
+    <section class=" flex flex-col  h-full max-w-lg justify-center items-center rounded-2xl gap-4 bg-cyan-950 p-6">
+        <div>
+            <h1 class=" text-2xl text-white pl-4"> Image Compressor <span class="text-green-500">Pro</span></h1>
+        </div>
+
+        <div>
+    <label id='preview' for="fileInput"
+         class="flex flex-col items-center h-full max-w-md   bg-amber-50 border-4 hover:border-green-800 border-dashed cursor-pointer rounded-2xl p-4 " >
+            <img src="src/upload.svg" alt="" width="80" height="80"> 
+            <p> Upload &amp; Drag image to compress</p>
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden">
+        </label>
+        </div>
+    
+
+        <div class="w-full">
+            <div class="flex justify-between text-center text-white text-sm mb-2">
+                <label for="quality">Compression level:</label>
+                <span id="qualityValue" class="text-xl text-center
+                ">75%</span>
+            </div>
+            <input type="range" min="50" max="100" value="75" class="flex flex-col text-white w-full pt-2 pb-2">
+        </div>
+        <button
+            class="flex  text-center text-xl items-center gap-2 w-full rounded-2xl bg-green-600 text-white  p-2 hover:bg-green-800  transition duration-400 shadow-2xl hover:scale-105">
+            <img src="src/zip.svg" alt="" width="30" height="30">
+            Optimize or Compress image</button>
+        <button type="button"
+            class="flex  text-center text-xl items-center gap-2 w-full rounded-2xl bg-green-600 text-white  p-2 hover:bg-green-800 transition duration-400 shadow-2xl  hover:scale-105">
+            <img src="src/download.svg" alt="" width="30" height="30">
+            Download Compressed Image </button>
+    </section>
+
+
+</body>
+
+</html>

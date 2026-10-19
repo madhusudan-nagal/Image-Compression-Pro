@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image Compressor</title>
+  <link rel="stylesheet" href="./src/output.css" />
+  <script src="app.js" defer></script>
+</head>
+
+<body class="min-h-screen bg-black text-slate-100 font-sans p-4 md:p-10">
+
+  <main class="max-w-6xl mx-auto rounded-3xl border border-slate-700/60 bg-[#0a1628] p-5 md:p-7">
+
+    <!-- ===== HEADER ===== -->
+    <header class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-4">
+
+
+        
+        <div class="w-14 h-14 rounded-xl bg-linear-to-br from-sky-500 to-emerald-500"></div>
+        <div>
+          <h1 class="text-2xl font-bold">
+            Image Compressor <span class="text-emerald-400">PRO</span>
+          </h1>
+          <p class="text-sm text-slate-400">Smart compression without perceptual loss</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <section class="lg:col-span-2 rounded-2xl border border-slate-700/60 p-4 space-y-4">
+
+        <label id="dropZone" for="fileInput"
+          class="flex flex-col items-center justify-center gap-3 h-48 rounded-xl border-2 border-dashed border-slate-600 cursor-pointer hover:border-emerald-400 transition">
+          <svg class="w-14 h-14 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.9-9.9A6 6 0 0 1 17.7 9 4.5 4.5 0 0 1 17 18"/><path d="M12 12v8M9 15l3-3 3 3"/></svg>
+          <p class="text-base">Drag &amp; drop your image or <span class="text-emerald-400">click to upload</span></p>
+          <p class="text-sm text-slate-400">PNG, JPG, WEBP • Max 50MB</p>
+          <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden" />
+        </label>
+
+        <div id="compare" class="relative h-72 rounded-xl overflow-hidden bg-slate-800">
+          <img id="beforeImg" alt="Original image" class="absolute inset-0 w-full h-full object-cover" />
+       
+          <div id="afterWrap" class="absolute inset-0" style="clip-path: inset(0 0 0 50%)">
+            <img id="afterImg" alt="Compressed image" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
+        </div>
+
+   
+        <div class="grid grid-cols-3 divide-x divide-slate-700/60 rounded-xl border border-slate-700/60 py-4 text-center">
+          <div>
+            <p class="text-sm text-slate-400">Original Size</p>
+            <p id="originalSize" class="text-xl font-semibold mt-1">—</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-400">Compressed Size</p>
+            <p id="compressedSize" class="text-xl font-semibold mt-1">—</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-400">Reduction</p>
+            <p id="reduction" class="text-2xl font-bold mt-1 text-emerald-400">—</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== right side ===== -->
+      <aside class="rounded-2xl border border-slate-700/60 p-4 flex flex-col gap-4">
+
+        <!--====== slider======= -->
+        <div>
+            <div class="flex justify-between text-sm mb-2">
+              <label for="quality">Intelligent compression level</label>
+              <span id="qualityValue">75%</span>
+            </div>
+          <input id="quality" type="range" min="10" max="100" value="75" class="w-full accent-blue-500" />
+        </div>
+
+        <button id="optimizeBtn"
+          class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold bg-linear-to-r from-blue-600 to-emerald-500 hover:opacity-90">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+          Optimize Image
+        </button>
+
+        <div class="grid grid-cols-2 gap-3 mt-auto">
+          <button id="downloadBtn" class="py-3 rounded-lg border border-slate-300 hover:bg-white/5">Download</button>
+          <!-- <button id="downloadAllBtn" class="py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500">Download All</button> -->
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+</body>
+</html>
