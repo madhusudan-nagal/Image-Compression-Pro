@@ -7,6 +7,7 @@ const reduction = document.getElementById("reduction");
 const qualitySlider = document.getElementById("quality");
 const qualityValue = document.getElementById("qualityValue");
 const optimizeBtn = document.getElementById("optimizeBtn");
+const deleteBtn = document.getElementById("deleteBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 
 let originalBytes = 0;
@@ -14,6 +15,7 @@ let canvas = null;
 let compressedBlob = null;
 let originalName = "";
 
+//converting size to mb and kb
 function formatSize(bytes) {
   const kb = bytes / 1024;
   const mb = bytes / (1024 * 1024);
@@ -27,13 +29,18 @@ function formatSize(bytes) {
   }
 }
 
+function canvasToBlob(quality) {
+  return new Promise((resolve) => {
+    canvas.toBlob(resolve, "image/jpeg", quality);
+  });
+}
+
 //  picking file from the user
 fileInput.addEventListener("change", () => {
   const file = fileInput.files[0];
   if (!file) {
     return;
   }
-
   originalBytes = file.size;
   originalName = file.name;
   afterImg.removeAttribute("src"); 
@@ -42,9 +49,21 @@ fileInput.addEventListener("change", () => {
   reduction.textContent = "—";
   beforeImg.src = URL.createObjectURL(file); 
   originalSize.textContent = formatSize(file.size); 
+  deleteBtn.classList.remove("hidden");
+});
 
-
-  console.log(originalBytes, originalName, afterImg, compressedSize, reduction,);
+deleteBtn.addEventListener("click", () => {
+  beforeImg.removeAttribute("src");
+  afterImg.removeAttribute("src");
+  canvas = null;
+  compressedBlob = null;
+  originalBytes = 0;
+  originalName = "";
+  originalSize.textContent = "—";
+  compressedSize.textContent = "—";
+  reduction.textContent = "—";
+  fileInput.value = "";
+  deleteBtn.classList.add("hidden");
 });
 
 // beforeImage drawing on canvas
@@ -57,36 +76,50 @@ beforeImg.addEventListener("load", () => {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   // painting the image
   ctx.drawImage(beforeImg, 0, 0);
-console.log();
+
 
 });
 
 qualitySlider.addEventListener("input", () => {
   qualityValue.textContent = qualitySlider.value + "%";
+
+  console.log(qualityValue.textContent , qualitySlider.value); 
 });
 
-optimizeBtn.addEventListener("click", () => {
+optimizeBtn.addEventListener("click", async () => {
   if (!canvas) {
     alert("Please upload an image first");
     return;
   }
 
-  const quality = qualitySlider.value / 100;
+  const targetBytes = originalBytes * (100 - qualitySlider.value) / 100;
 
-  canvas.toBlob(
-    (blob) => {
-      compressedBlob = blob;
-      afterImg.src = URL.createObjectURL(blob);
-      compressedSize.textContent = formatSize(blob.size);
+  let low = 0.01;
+  let high = 1;
+  let bestBlob = null;
 
-      const saved = ((originalBytes - blob.size) / originalBytes) * 100;
-      reduction.textContent = saved.toFixed(0) + "%";
+  for (let i = 0; i < 8; i++) {
+    const mid = (low + high) / 2;
+    const blob = await canvasToBlob(mid);
 
-      console.log("Blob:", blob);
-    },
-    "image/jpeg",
-    quality,
-  );
+    if (blob.size <= targetBytes) {
+      bestBlob = blob;   
+      low = mid;
+    } else {
+      high = mid;    
+    }
+  }
+
+  if (!bestBlob) {
+    bestBlob = await canvasToBlob(0.01);
+  }
+
+  compressedBlob = bestBlob;
+  afterImg.src = URL.createObjectURL(bestBlob);
+  compressedSize.textContent = formatSize(bestBlob.size);
+
+  const saved = ((originalBytes - bestBlob.size) / originalBytes) * 100;
+  reduction.textContent = saved.toFixed(0) + "%";
 });
 
 downloadBtn.addEventListener("click", () => {

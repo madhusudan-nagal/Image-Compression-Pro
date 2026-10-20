@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +18,7 @@
       <div class="flex items-center gap-4">
 
 
-        
+
         <div class="w-14 h-14 rounded-xl bg-linear-to-br from-sky-500 to-emerald-500"></div>
         <div>
           <h1 class="text-2xl font-bold">
@@ -34,7 +35,11 @@
 
         <label id="dropZone" for="fileInput"
           class="flex flex-col items-center justify-center gap-3 h-48 rounded-xl border-2 border-dashed border-slate-600 cursor-pointer hover:border-emerald-400 transition">
-          <svg class="w-14 h-14 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.9-9.9A6 6 0 0 1 17.7 9 4.5 4.5 0 0 1 17 18"/><path d="M12 12v8M9 15l3-3 3 3"/></svg>
+          <svg class="w-14 h-14 text-emerald-400" fill="none" stroke="currentColor" stroke-width="1.6"
+            viewBox="0 0 24 24">
+            <path d="M7 18a5 5 0 0 1-.9-9.9A6 6 0 0 1 17.7 9 4.5 4.5 0 0 1 17 18" />
+            <path d="M12 12v8M9 15l3-3 3 3" />
+          </svg>
           <p class="text-base">Drag &amp; drop your image or <span class="text-emerald-400">click to upload</span></p>
           <p class="text-sm text-slate-400">PNG, JPG, WEBP • Max 50MB</p>
           <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden" />
@@ -42,14 +47,19 @@
 
         <div id="compare" class="relative h-72 rounded-xl overflow-hidden bg-slate-800">
           <img id="beforeImg" alt="Original image" class="absolute inset-0 w-full h-full object-cover" />
-       
+
           <div id="afterWrap" class="absolute inset-0" style="clip-path: inset(0 0 0 50%)">
             <img id="afterImg" alt="Compressed image" class="absolute inset-0 w-full h-full object-cover" />
           </div>
+          <button id="deleteBtn" type="button" class="hidden absolute top-3 left-3 z-10 w-9 h-9 rounded-full text-black text-lg
+           opacity-0 group-hover:opacity-100 transition  p-2 cursor-pointer">
+            ✕
+          </button>
         </div>
 
-   
-        <div class="grid grid-cols-3 divide-x divide-slate-700/60 rounded-xl border border-slate-700/60 py-4 text-center">
+
+        <div
+          class="grid grid-cols-3 divide-x divide-slate-700/60 rounded-xl border border-slate-700/60 py-4 text-center">
           <div>
             <p class="text-sm text-slate-400">Original Size</p>
             <p id="originalSize" class="text-xl font-semibold mt-1">—</p>
@@ -70,16 +80,18 @@
 
         <!--====== slider======= -->
         <div>
-            <div class="flex justify-between text-sm mb-2">
-              <label for="quality">Intelligent compression level</label>
-              <span id="qualityValue">75%</span>
-            </div>
+          <div class="flex justify-between text-sm mb-2">
+            <label for="quality">Intelligent compression level</label>
+            <span id="qualityValue">75%</span>
+          </div>
           <input id="quality" type="range" min="10" max="100" value="75" class="w-full accent-blue-500" />
         </div>
 
         <button id="optimizeBtn"
           class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold bg-linear-to-r from-blue-600 to-emerald-500 hover:opacity-90">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 2L4 14h7l-1 8 9-12h-7z" />
+          </svg>
           Optimize Image
         </button>
 
@@ -93,4 +105,5 @@
   </main>
 
 </body>
+
 </html>
