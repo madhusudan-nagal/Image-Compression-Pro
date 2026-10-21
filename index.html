@@ -16,10 +16,8 @@
     <!-- ===== HEADER ===== -->
     <header class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-4">
-
-
-
-        <div class="w-14 h-14 rounded-xl bg-linear-to-br from-sky-500 to-emerald-500"></div>
+        <!-- FIX: real logo instead of the empty gradient box -->
+        <img src="src/logo.png" alt="Image Compressor Pro logo" class=" rounded-2xl w-14 h-14">
         <div>
           <h1 class="text-2xl font-bold">
             Image Compressor <span class="text-emerald-400">PRO</span>
@@ -45,18 +43,37 @@
           <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" class="hidden" />
         </label>
 
-        <div id="compare" class="relative h-72 rounded-xl overflow-hidden bg-slate-800">
-          <img id="beforeImg" alt="Original image" class="absolute inset-0 w-full h-full object-cover" />
+        <div id="compare" class="group relative h-72 rounded-xl overflow-hidden bg-slate-800">
+
+          <p id="emptyText" class="absolute inset-0 flex items-center justify-center text-slate-400">
+            Upload an image to preview
+          </p>
+
+          <img id="beforeImg" alt="Original image"
+            class="hidden absolute inset-0 w-full h-full object-contain" />
 
           <div id="afterWrap" class="absolute inset-0" style="clip-path: inset(0 0 0 50%)">
-            <img id="afterImg" alt="Compressed image" class="absolute inset-0 w-full h-full object-cover" />
+            <img id="afterImg" alt="Compressed image"
+              class="hidden absolute inset-0 w-full h-full object-contain" />
           </div>
-          <button id="deleteBtn" type="button" class="hidden absolute top-3 left-3 z-10 w-9 h-9 rounded-full text-black text-lg
-           opacity-0 group-hover:opacity-100 transition  p-2 cursor-pointer">
+
+          <div id="compareUi" class="hidden">
+            <div class="absolute inset-y-0 left-1/2 w-0.5 -translate-x-1/2 bg-white/80 z-10"></div>
+            <span class="absolute top-3 left-14 z-10 px-2 py-1 rounded-md text-xs bg-slate-900/80">Before</span>
+            <span class="absolute top-3 right-3 z-10 px-2 py-1 rounded-md text-xs bg-emerald-600">After</span>
+          </div>
+
+          <div id="loader" class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-slate-900/70">
+            <div class="w-10 h-10 rounded-full border-4 border-slate-600 border-t-emerald-400 animate-spin"></div>
+            <p id="loaderText" class="text-sm text-slate-200">Working…</p>
+          </div>
+
+          <button id="deleteBtn" type="button"
+            class="hidden absolute top-3 left-3 z-20 w-9 h-9 rounded-full bg-red-600 text-white text-lg
+                   opacity-0 group-hover:opacity-100 transition hover:bg-red-700 cursor-pointer">
             ✕
           </button>
         </div>
-
 
         <div
           class="grid grid-cols-3 divide-x divide-slate-700/60 rounded-xl border border-slate-700/60 py-4 text-center">
@@ -75,30 +92,34 @@
         </div>
       </section>
 
-      <!-- ===== right side ===== -->
+      <!-- ===== RIGHT SIDE ===== -->
       <aside class="rounded-2xl border border-slate-700/60 p-4 flex flex-col gap-4">
 
-        <!--====== slider======= -->
+        <!-- ===== Slider ===== -->
         <div>
           <div class="flex justify-between text-sm mb-2">
-            <label for="quality">Intelligent compression level</label>
-            <span id="qualityValue">75%</span>
+            <label for="quality">Output Size</label>
+            <span id="qualityValue">100%</span>
           </div>
-          <input id="quality" type="range" min="10" max="100" value="75" class="w-full accent-blue-500" />
+          <input id="quality" type="range" min="4" max="100" value="100" step="4"
+            class="w-full accent-blue-500 cursor-pointer" />
         </div>
 
         <button id="optimizeBtn"
-          class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold bg-linear-to-r from-blue-600 to-emerald-500 hover:opacity-90">
+          class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold bg-linear-to-r from-blue-600 to-emerald-500 hover:opacity-90 cursor-pointer">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M13 2L4 14h7l-1 8 9-12h-7z" />
           </svg>
           Optimize Image
         </button>
 
-        <div class="grid grid-cols-2 gap-3 mt-auto">
-          <button id="downloadBtn" class="py-3 rounded-lg border border-slate-300 hover:bg-white/5">Download</button>
-          <!-- <button id="downloadAllBtn" class="py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500">Download All</button> -->
-        </div>
+        <p id="statusText" class="text-sm text-slate-400 text-center"></p>
+
+        <button id="downloadBtn"
+          class="py-3 rounded-lg border border-slate-300 hover:bg-white/5 cursor-pointer">
+          Download
+        </button>
+
       </aside>
 
     </div>
